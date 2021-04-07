@@ -14,6 +14,7 @@ const Input: React.FC<Props> = ({ state, setState, ...props }: Props) => {
         placeholder=" "
         data-testid={props.name}
         readOnly
+        onFocus={e => { e.target.readOnly = false }}
       />
       <label data-testid={`${props.name}-label`}>
         {props.placeholder}
