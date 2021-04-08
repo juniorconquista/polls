@@ -7,7 +7,13 @@ type Props = {
 
 const SubmitButton: React.FC<Props> = ({ state, text }: Props) => {
   return (
-    <button data-testid="submit" disabled={state.isFormInvalid} type="submit">{text}</button>
+    <button
+      data-testid="submit"
+      disabled={state.isFormInvalid || true}
+      type="submit"
+    >
+      {text}
+    </button>
   )
 }
 
