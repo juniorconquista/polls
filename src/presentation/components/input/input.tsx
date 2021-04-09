@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
+
+import Context from '@/presentation/contexts/form/form-context'
 import Styles from './input-styles.scss'
 
 type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
@@ -7,8 +9,15 @@ type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>
 }
 
 const Input: React.FC<Props> = ({ state, setState, ...props }: Props) => {
+  const { errors } = useContext(Context)
+  const error = errors[props.name]
+
   return (
-    <div data-testid={`${props.name}-wrap`} className={Styles.inputWrap}>
+    <div
+      data-testid={`${props.name}-wrap`}
+      className={Styles.inputWrap}
+      data-status={error ? 'invalid' : 'valid'}
+    >
       <input
         {...props}
         placeholder=" "
@@ -16,7 +25,7 @@ const Input: React.FC<Props> = ({ state, setState, ...props }: Props) => {
         readOnly
         onFocus={e => { e.target.readOnly = false }}
       />
-      <label data-testid={`${props.name}-label`}>
+      <label data-testid={`${props.name}-label`} title={error}>
         {props.placeholder}
       </label>
     </div>
