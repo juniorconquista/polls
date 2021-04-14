@@ -12,8 +12,9 @@ const Input: React.FC<Props> = ({ type, name, placeholder }: Props) => {
       type={type}
       name={name}
       placeholder={placeholder}
-      state={{}}
-      setState={() => {}}
+      autoComplete={`current-${name}`}
+      // state={{}}
+      // setState={() => {}}
     />
   )
 }

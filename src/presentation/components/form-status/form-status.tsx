@@ -8,11 +8,13 @@ type Props = {
 }
 
 const FormStatus: React.FC<Props> = (props: Props) => {
-  const { state, errors } = useContext(Context)
+  const { state } = useContext(Context)
+  const { isLoading, mainError } = state
+
   return (
     <div data-testid="error-wrap" className={Styles.errorWrap}>
-      {state.isLoading && <Spinner className={Styles.spinner} />}
-      {errors.main && <span data-testid="main-error" className={Styles.error}>{errors.main}</span>}
+      {isLoading && <Spinner className={Styles.spinner} />}
+      {mainError && <span data-testid="main-error" className={Styles.error}>{mainError}</span>}
     </div>
   )
 }
