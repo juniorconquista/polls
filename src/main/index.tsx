@@ -7,7 +7,7 @@ import '@/presentation/styles/global.scss'
 
 ReactDOM.render(
     <Router
-        MakeLogin={makeLogin}
+        makeLogin={makeLogin}
     />,
     document.getElementById('main')
 )
