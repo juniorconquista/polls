@@ -10,7 +10,8 @@
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
     "pre-commit": "lint-staged",
-    "pre-push": "npm run test:ci"
+    "pre-push": "npm run test:ci",
+    "chek": "npm-check -u -s"
   },
   "keywords": [],
   "author": "Júnior Conquista <conquista.engcomp@gmail.com>",
