@@ -4,15 +4,16 @@ import { Footer, LoginHeader } from '@/presentation/components'
 import { Input, SubmitButton, FormStatus } from './components'
 import Context from '@/presentation/contexts/form/form-context'
 import { Validation } from '@/presentation/protocols/Validation'
-import { Authentication } from '@/domain/usecases'
+import { Authentication, SaveAccessToken } from '@/domain/usecases'
 import Styles from './login-styles.scss'
 
 type Props = {
   validation: Validation
   authentication: Authentication
+  saveAccessToken: SaveAccessToken
 }
 
-const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
+const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }: Props) => {
   const history = useHistory()
   const [state, setState] = useState({
     isLoading: false,
@@ -40,7 +41,7 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
           isLoading: true
         })
         const account = await authentication.auth({ email: state.email, password: state.password })
-        localStorage.setItem('accesToken', account.accessToken)
+        await saveAccessToken.save(account.accessToken)
         history.replace('/')
       }
     } catch (error) {
