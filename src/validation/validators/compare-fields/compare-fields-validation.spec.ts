@@ -13,8 +13,9 @@ describe('CompareFieldsValidation', () => {
     expect(sut.validate(faker.random.word())).toEqual(new InvalidFieldError())
   })
 
-  //   it('should return falsy if field is not empty', () => {
-  //     const sut = makeSut()
-  //     expect(sut.validate(faker.random.word())).toBeFalsy()
-  //   })
+  it('should return falsy if compare is valid', () => {
+    const valueToCompare = faker.random.word()
+    const sut = makeSut(valueToCompare)
+    expect(sut.validate(valueToCompare)).toBeFalsy()
+  })
 })
