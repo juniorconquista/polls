@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Footer, LoginHeader } from '@/presentation/components'
 import { Input, SubmitButton, FormStatus } from './components'
@@ -8,9 +8,18 @@ import Styles from './signup-styles.scss'
 type Props = {}
 
 const Signup: React.FC<Props> = () => {
+  const [state] = useState({
+    isLoading: false,
+    nameError: 'Campo obrigatório',
+    emailError: 'Campo obrigatório',
+    passwordError: 'Campo obrigatório',
+    passwordConfirmationError: 'Campo obrigatório',
+    mainError: ''
+  })
+
   return (
     <div className={Styles.signupWrap}>
-      <Context.Provider value={{ state: {} }} >
+      <Context.Provider value={{ state }} >
         <LoginHeader />
         <form data-testid="form" className={Styles.form}>
           <h2>Cria conta</h2>
