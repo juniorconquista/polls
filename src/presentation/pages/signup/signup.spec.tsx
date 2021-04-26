@@ -1,8 +1,9 @@
 import React from 'react'
 // import faker from 'faker'
 import { createMemoryHistory } from 'history'
-import { cleanup, render, RenderResult, screen } from '@testing-library/react'
+import { cleanup, render, RenderResult } from '@testing-library/react'
 import { Router } from 'react-router-dom'
+import { Helper } from '@/presentation/test'
 import Signup from './signup'
 
 type SutTypes = {
@@ -14,27 +15,12 @@ const history = createMemoryHistory({ initialEntries: ['/'] })
 const makeSut = (): SutTypes => {
   const sut = render(
         <Router history={history}>
-            <Signup
-
-            />
+            <Signup />
         </Router>
   )
   return {
     sut
   }
-}
-
-const testChildCount = (fieldName: string, count: number): void => {
-  expect(screen.getByTestId(fieldName).childElementCount).toBe(count)
-}
-
-// const testButtonIsDisabled = (fieldName: string): void => {
-//   expect(screen.getByTestId(fieldName)).toBeDisabled()
-// }
-
-const testStatusForField = (fieldName: string, validationError?: string): void => {
-  expect(screen.getByTestId(`${fieldName}-label`).title).toBe(validationError || 'ok')
-  expect(screen.getByTestId(`${fieldName}-wrap`)).toHaveAttribute('data-status', validationError ? 'invalid' : 'valid')
 }
 
 describe('Signup component', () => {
@@ -43,11 +29,18 @@ describe('Signup component', () => {
   it('should start with initial state', () => {
     const validationError = 'Campo obrigatório'
     makeSut()
-    testChildCount('error-wrap', 0)
-    // testButtonIsDisabled('submit')
-    testStatusForField('name', validationError)
-    testStatusForField('email', validationError)
-    testStatusForField('password', validationError)
-    testStatusForField('passwordConfirmation', validationError)
+    Helper.testChildCount('error-wrap', 0)
+    // Helper.testButtonIsDisabled('submit')
+    Helper.testStatusForField('name', validationError)
+    Helper.testStatusForField('email', validationError)
+    Helper.testStatusForField('password', validationError)
+    Helper.testStatusForField('passwordConfirmation', validationError)
+  })
+
+  it('should show email error if Validation fails', () => {
+    const validationError = faker.random.words()
+    makeSut({ validationError })
+    populateEmailField()
+    Helper.testStatusForField('email', validationError)
   })
 })
