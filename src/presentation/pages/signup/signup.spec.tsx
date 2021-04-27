@@ -183,10 +183,17 @@ describe('Signup component', () => {
 
   it('should present error if SaveAccessToken fails', async () => {
     const { saveAccessTokenMock } = makeSut()
-    const error = new InvalidCredentialsError()
-    jest.spyOn(saveAccessTokenMock, 'save').mockReturnValueOnce(Promise.reject(error))
+    const error = new EmailInUseError()
+    jest.spyOn(saveAccessTokenMock, 'save').mockRejectedValueOnce(error)
     await simulateValidSubmit()
     Helper.testElementText('main-error', error.message)
     Helper.testChildCount('error-wrap', 1)
+  })
+
+  it('should go to signup page', async () => {
+    makeSut()
+    userEvent.click(screen.getByTestId('signup-link'))
+    expect(history.length).toBe(2)
+    expect(history.location.pathname).toBe('/signup')
   })
 })
