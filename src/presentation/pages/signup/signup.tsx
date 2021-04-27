@@ -4,13 +4,15 @@ import { Footer, LoginHeader } from '@/presentation/components'
 import { Input, SubmitButton, FormStatus } from './components'
 import Context from '@/presentation/contexts/form/form-context'
 import { Validation } from '@/presentation/protocols/Validation'
+import { AddAccount } from '@/domain/usecases'
 import Styles from './signup-styles.scss'
 
 type Props = {
   validation: Validation
+  addAccount: AddAccount
 }
 
-const Signup: React.FC<Props> = ({ validation }: Props) => {
+const Signup: React.FC<Props> = ({ validation, addAccount }: Props) => {
   const [state, setState] = useState({
     isLoading: false,
     name: '',
@@ -40,7 +42,13 @@ const Signup: React.FC<Props> = ({ validation }: Props) => {
       ...state,
       isLoading: true
     })
-  }, [])
+    await addAccount.add({
+      name: state.name,
+      email: state.email,
+      password: state.password,
+      passwordConfirmation: state.passwordConfirmation
+    })
+  }, [state.name, state.email, state.password, state.passwordConfirmation])
 
   return (
     <div className={Styles.signupWrap}>
