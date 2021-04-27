@@ -22,3 +22,7 @@ export const testStatusForField = (fieldName: string, validationError?: string):
 export const populateField = (fieldName: string, value = faker.random.words()): void => {
   userEvent.type(screen.getByTestId(fieldName), value)
 }
+
+export const testElementExists = (element: string): void => {
+  expect(screen.getByTestId(element)).toBeTruthy()
+}
