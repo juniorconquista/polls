@@ -38,16 +38,18 @@ const Signup: React.FC<Props> = ({ validation, addAccount }: Props) => {
 
   const handleSubmit = useCallback(async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
-    setState({
-      ...state,
-      isLoading: true
-    })
-    await addAccount.add({
-      name: state.name,
-      email: state.email,
-      password: state.password,
-      passwordConfirmation: state.passwordConfirmation
-    })
+    if (!state.isLoading) {
+      setState({
+        ...state,
+        isLoading: true
+      })
+      await addAccount.add({
+        name: state.name,
+        email: state.email,
+        password: state.password,
+        passwordConfirmation: state.passwordConfirmation
+      })
+    }
   }, [state.name, state.email, state.password, state.passwordConfirmation])
 
   return (
