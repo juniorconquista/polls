@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { Footer, LoginHeader } from '@/presentation/components'
 import { Input, SubmitButton, FormStatus } from './components'
@@ -34,11 +34,19 @@ const Signup: React.FC<Props> = ({ validation }: Props) => {
     })
   }, [state.name, state.email, state.password, state.passwordConfirmation])
 
+  const handleSubmit = useCallback(async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    event.preventDefault()
+    setState({
+      ...state,
+      isLoading: true
+    })
+  }, [])
+
   return (
     <div className={Styles.signupWrap}>
       <Context.Provider value={{ state, setState }} >
         <LoginHeader />
-        <form data-testid="form" className={Styles.form}>
+        <form data-testid="form" className={Styles.form} onSubmit={handleSubmit}>
           <h2>Cria conta</h2>
           <Input type="text" name="name" placeholder="Digite seu nome" />
           <Input type="email" name="email" placeholder="Digite seu e-mail" />
