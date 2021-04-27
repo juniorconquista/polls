@@ -6,8 +6,12 @@ export const testChildCount = (fieldName: string, count: number): void => {
   expect(screen.getByTestId(fieldName).childElementCount).toBe(count)
 }
 
-export const testButtonIsDisabled = (fieldName: string): void => {
-  expect(screen.getByTestId(fieldName)).toBeDisabled()
+export const testButtonIsDisabled = (fieldName: string, enabled: boolean = true): void => {
+  if (enabled) {
+    expect(screen.getByTestId(fieldName)).toBeDisabled()
+  } else {
+    expect(screen.getByTestId(fieldName)).not.toBeDisabled()
+  }
 }
 
 export const testStatusForField = (fieldName: string, validationError?: string): void => {

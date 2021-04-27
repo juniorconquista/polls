@@ -102,7 +102,7 @@ describe('Login component', () => {
     makeSut()
     Helper.populateField('email')
     Helper.populateField('password')
-    expect(screen.getByTestId('submit')).not.toBeDisabled()
+    Helper.testButtonIsDisabled('submit', false)
   })
 
   it('should show spinner on submit', async () => {
