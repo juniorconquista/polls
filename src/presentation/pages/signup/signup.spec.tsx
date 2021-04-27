@@ -5,6 +5,7 @@ import { Router } from 'react-router-dom'
 import { cleanup, render, fireEvent, screen, waitFor, RenderResult } from '@testing-library/react'
 import { AddAccountSpy, Helper, ValidationStub } from '@/presentation/test'
 import Signup from './signup'
+import { EmailInUseError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RenderResult
@@ -157,5 +158,14 @@ describe('Signup component', () => {
     Helper.populateField('email')
     await simulateValidSubmit()
     expect(addAccountSpy.callsCount).toBe(0)
+  })
+
+  it('should present error if AddAccount fails', async () => {
+    const { addAccountSpy } = makeSut()
+    const error = new EmailInUseError()
+    jest.spyOn(addAccountSpy, 'add').mockRejectedValueOnce(error)
+    await simulateValidSubmit()
+    Helper.testElementText('main-error', error.message)
+    Helper.testChildCount('error-wrap', 1)
   })
 })

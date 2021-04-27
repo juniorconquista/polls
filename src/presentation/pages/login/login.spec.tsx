@@ -52,10 +52,6 @@ const simulateValidSubmit = async (
   await waitFor(() => form)
 }
 
-const testElementText = (element: string, text: string): void => {
-  expect(screen.getByTestId(element).textContent).toBe(text)
-}
-
 describe('Login component', () => {
   afterEach(cleanup)
 
@@ -136,9 +132,9 @@ describe('Login component', () => {
   it('should present error if Authentication fails', async () => {
     const { authenticationSpy } = makeSut()
     const error = new InvalidCredentialsError()
-    jest.spyOn(authenticationSpy, 'auth').mockReturnValueOnce(Promise.reject(error))
+    jest.spyOn(authenticationSpy, 'auth').mockRejectedValueOnce(error)
     await simulateValidSubmit()
-    testElementText('main-error', error.message)
+    Helper.testElementText('main-error', error.message)
     Helper.testChildCount('error-wrap', 1)
   })
 
@@ -155,7 +151,7 @@ describe('Login component', () => {
     const error = new InvalidCredentialsError()
     jest.spyOn(saveAccessTokenMock, 'save').mockReturnValueOnce(Promise.reject(error))
     await simulateValidSubmit()
-    testElementText('main-error', error.message)
+    Helper.testElementText('main-error', error.message)
     Helper.testChildCount('error-wrap', 1)
   })
 

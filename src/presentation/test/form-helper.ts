@@ -26,3 +26,7 @@ export const populateField = (fieldName: string, value = faker.random.words()): 
 export const testElementExists = (element: string): void => {
   expect(screen.getByTestId(element)).toBeTruthy()
 }
+
+export const testElementText = (element: string, text: string): void => {
+  expect(screen.getByTestId(element).textContent).toBe(text)
+}
