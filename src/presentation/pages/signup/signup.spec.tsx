@@ -72,4 +72,28 @@ describe('Signup component', () => {
     Helper.populateField('passwordConfirmation')
     Helper.testStatusForField('passwordConfirmation', validationError)
   })
+
+  it('should show valid name state if Validation succeeds', () => {
+    makeSut()
+    Helper.populateField('name')
+    Helper.testStatusForField('name')
+  })
+
+  it('should show valid email state if Validation succeeds', () => {
+    makeSut()
+    Helper.populateField('email')
+    Helper.testStatusForField('email')
+  })
+
+  it('should show valid password state if Validation succeeds', () => {
+    makeSut()
+    Helper.populateField('password')
+    Helper.testStatusForField('password')
+  })
+
+  it('should show valid passwordConfirmation state if Validation succeeds', () => {
+    makeSut()
+    Helper.populateField('passwordConfirmation')
+    Helper.testStatusForField('passwordConfirmation')
+  })
 })

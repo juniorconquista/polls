@@ -45,19 +45,11 @@ const simulateValidSubmit = async (
   email = faker.internet.email(),
   password = faker.internet.password()
 ): Promise<void> => {
-  populateEmailField(email)
-  populatePasswordField(password)
+  Helper.populateField('email', email)
+  Helper.populateField('password', password)
   const form = screen.getByTestId('form')
   fireEvent.submit(form)
   await waitFor(() => form)
-}
-
-const populateEmailField = (email = faker.internet.email()): void => {
-  userEvent.type(screen.getByTestId('email'), email)
-}
-
-const populatePasswordField = (password = faker.internet.password()): void => {
-  userEvent.type(screen.getByTestId('password'), password)
 }
 
 const testElementExists = (element: string): void => {
@@ -83,33 +75,33 @@ describe('Login component', () => {
   it('should show email error if Validation fails', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
-    populateEmailField()
+    Helper.populateField('email')
     Helper.testStatusForField('email', validationError)
   })
 
   it('should show password error if Validation fails', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
-    populatePasswordField()
+    Helper.populateField('password')
     Helper.testStatusForField('password', validationError)
   })
 
   it('should show valid email state if Validation succeeds', () => {
     makeSut()
-    populateEmailField()
+    Helper.populateField('email')
     Helper.testStatusForField('email')
   })
 
   it('should show valid email state if Validation succeeds', () => {
     makeSut()
-    populatePasswordField()
+    Helper.populateField('password')
     Helper.testStatusForField('password')
   })
 
   it('should enabled submit button if from is valid', () => {
     makeSut()
-    populateEmailField()
-    populatePasswordField()
+    Helper.populateField('email')
+    Helper.populateField('password')
     expect(screen.getByTestId('submit')).not.toBeDisabled()
   })
 
@@ -140,7 +132,7 @@ describe('Login component', () => {
   it('should not call Authentication if form is invalid', async () => {
     const validationError = faker.random.words()
     const { authenticationSpy } = makeSut({ validationError })
-    populateEmailField()
+    Helper.populateField('email')
     await simulateValidSubmit()
     expect(authenticationSpy.callsCount).toBe(0)
   })
