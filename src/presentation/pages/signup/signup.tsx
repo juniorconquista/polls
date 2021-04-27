@@ -75,7 +75,14 @@ const Signup: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Pr
           <Input type="password" name="password" placeholder="Digite sua senha" />
           <Input type="password" name="passwordConfirmation" placeholder="Repita sua senha" />
           <SubmitButton text="Entrar" />
-          <Link data-testid="/login" to="/signup" className={Styles.link}>Login</Link>
+          <Link
+            data-testid="login-link"
+            to="/login"
+            className={Styles.link}
+            replace
+          >
+            Login
+          </Link>
           <FormStatus />
         </form>
       </Context.Provider>
