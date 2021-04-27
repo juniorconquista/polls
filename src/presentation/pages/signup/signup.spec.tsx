@@ -4,8 +4,9 @@ import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { cleanup, render, fireEvent, screen, waitFor, RenderResult } from '@testing-library/react'
 import { AddAccountSpy, Helper, SaveAccessTokenMock, ValidationStub } from '@/presentation/test'
-import Signup from './signup'
+import userEvent from '@testing-library/user-event'
 import { EmailInUseError } from '@/domain/errors'
+import Signup from './signup'
 
 type SutTypes = {
   sut: RenderResult
@@ -61,7 +62,7 @@ describe('Signup component', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.testChildCount('error-wrap', 0)
-    // Helper.testButtonIsDisabled('submit')
+    Helper.testButtonIsDisabled('submit')
     Helper.testStatusForField('name', validationError)
     Helper.testStatusForField('email', validationError)
     Helper.testStatusForField('password', validationError)
@@ -190,10 +191,10 @@ describe('Signup component', () => {
     Helper.testChildCount('error-wrap', 1)
   })
 
-  it('should go to signup page', async () => {
+  it('should go to login page', async () => {
     makeSut()
-    userEvent.click(screen.getByTestId('signup-link'))
-    expect(history.length).toBe(2)
-    expect(history.location.pathname).toBe('/signup')
+    userEvent.click(screen.getByTestId('login-link'))
+    expect(history.length).toBe(1)
+    expect(history.location.pathname).toBe('/login')
   })
 })
