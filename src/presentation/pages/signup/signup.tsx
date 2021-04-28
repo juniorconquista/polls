@@ -72,7 +72,7 @@ const Signup: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Pr
         mainError: error.message
       })
     }
-  }, [state.name, state.email, state.password, state.passwordConfirmation])
+  }, [state.name, state.email, state.password, state.passwordConfirmation, state.isFormInvalid])
 
   return (
     <div className={Styles.signupWrap}>

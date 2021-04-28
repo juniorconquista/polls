@@ -31,6 +31,7 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
 
     const emailError = validation.validate('email', formData)
     const passwordError = validation.validate('password', formData)
+
     setState({
       ...state,
       emailError,
@@ -58,7 +59,7 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
         mainError: error.message
       })
     }
-  }, [state.email, state.password])
+  }, [state.email, state.password, state.isFormInvalid])
 
   return (
     <div className={Styles.loginWrap}>
