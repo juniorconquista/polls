@@ -8,12 +8,11 @@ type Props = {
 
 const SubmitButton: React.FC<Props> = ({ text }: Props) => {
   const { state } = useContext(Context)
-  const isFormInvalid = state.emailError || state.passwordError
 
   return (
     <button
       data-testid="submit"
-      disabled={!!isFormInvalid}
+      disabled={state.isFormInvalid}
       type="submit"
     >
       {text}
